@@ -9,7 +9,7 @@ export class Breed {
   @Column()
   name: string;
 
-  @Column({ name: 'origin_country', nullable: true })
+  @Column({ name: 'origin_country', type: 'varchar', nullable: true })
   originCountry: string | null;
 
   @Column({ type: 'text', nullable: true })

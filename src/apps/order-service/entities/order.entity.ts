@@ -29,7 +29,7 @@ export class Order {
   })
   status: OrderStatus;
 
-  @Column({ name: 'payment_method', nullable: true })
+  @Column({ name: 'payment_method', type: 'varchar', nullable: true })
   paymentMethod: string | null;
 
   @Column({
