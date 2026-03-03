@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from '../../../libs/common/enums';
-import { Cart } from '../../../cart-service/entities/cart.entity';
+import { Cart } from '../../cart-service/entities/cart.entity';
 import { Order } from '../../order-service/entities/order.entity';
 
 @Entity({ name: 'users' })

@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Cart } from './cart.entity';
-import { Cat } from '../../apps/cat-service/entities/cat-service.entity';
+import { Cat } from '../../cat-service/entities/cat-service.entity';
 
 @Entity({ name: 'cart_items' })
 export class CartItem {

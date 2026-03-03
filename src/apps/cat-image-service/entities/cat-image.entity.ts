@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Cat } from '../../apps/cat-service/entities/cat-service.entity';
+import { Cat } from '../../cat-service/entities/cat-service.entity';
 
 @Entity({ name: 'cat_images' })
 export class CatImage {
