@@ -1,31 +1,27 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
-import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './apps/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.TCP,
-  });
-
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Gateway API')
+    .setDescription('HTTP gateway for microservices')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.startAllMicroservices();
-  await app.listen(process.env.HTTP_PORT ?? 8000);
+  const port = process.env.HTTP_PORT ?? 3000;
+  await app.listen(port);
+
+  console.log(`Gateway is running on http://localhost:${port}`);
 }
 
 bootstrap().catch((err) => {
-  console.error('Bootstrap failed', err);
+  console.error('Gateway bootstrap failed', err);
   process.exit(1);
 });
