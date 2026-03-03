@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Cat } from '../../apps/cat-service/entities/cat-service.entity';
+import { Cat } from '../../cat-service/entities/cat-service.entity';
 
 @Entity({ name: 'breeds' })
 export class Breed {

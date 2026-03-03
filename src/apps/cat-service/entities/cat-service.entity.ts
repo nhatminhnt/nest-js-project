@@ -9,9 +9,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { CatStatus } from '../../../libs/common/enums';
-import { Breed } from '../../../breed-service/entities/breed-service.entity';
-import { CatImage } from '../../../cat-image-service/entities/cat-image.entity';
-import { CartItem } from '../../../cart-service/entities/cart-item.entity';
+import { Breed } from '../../breed-service/entities/breed-service.entity';
+import { CatImage } from '../../cat-image-service/entities/cat-image.entity';
+import { CartItem } from '../../cart-service/entities/cart-item.entity';
 
 @Entity({ name: 'cats' })
 export class Cat {
