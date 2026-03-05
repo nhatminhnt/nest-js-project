@@ -1,21 +1,21 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { DatabaseModule } from '../../database/database.module';
-import { CatServiceModule } from '../cat-service/cat-service.module';
-import { UserServiceModule } from '../user-service/user-service.module';
-import { OrderServiceModule } from '../order-service/order-service.module';
+import { CatModule } from '../cat/cat.module';
+import { UserModule } from '../user/user.module';
+import { OrderModule } from '../order/order.module';
 import { LoggerMiddleware } from '../../libs/common/src/middlewares/logger.middleware';
 import { RequestIdMiddleware } from '../../libs/common/src/middlewares/request-id.middleware';
-import { AuthServiceModule } from '../auth-service/auth-service.module';
-import { BreedServiceModule } from '../breed-service/breed-service.module';
+import { AuthModule } from '../auth/auth.module';
+import { BreedModule } from '../breed/breed.module';
 
 @Module({
   imports: [
     DatabaseModule,
-    CatServiceModule,
-    UserServiceModule,
-    OrderServiceModule,
-    BreedServiceModule,
-    AuthServiceModule,
+    CatModule,
+    UserModule,
+    OrderModule,
+    BreedModule,
+    AuthModule,
   ],
 })
 export class ApiGatewayModule implements NestModule {
