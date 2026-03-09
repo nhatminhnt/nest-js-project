@@ -1,26 +1,101 @@
-import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new userService';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
+
+  private toSafeUser(user: User) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { passwordHash, ...safeUser } = user;
+    return safeUser;
   }
 
-  findAll() {
-    return `This action returns all userService`;
+  async create(createUserDto: CreateUserDto) {
+    const { password, email, ...userData } = createUserDto;
+
+    const existingUser = await this.userRepository.findOne({
+      where: { email },
+    });
+
+    if (existingUser) {
+      throw new BadRequestException('Email already exists');
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = this.userRepository.create({
+      ...userData,
+      email,
+      passwordHash,
+    });
+
+    const saved = await this.userRepository.save(user);
+    return this.toSafeUser(saved);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userService`;
+  async findAll() {
+    const users = await this.userRepository.find();
+    return users.map((u) => this.toSafeUser(u));
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} userService`;
+  async findOne(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.toSafeUser(user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userService`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const { password, ...userData } = updateUserDto;
+
+    if (password) {
+      user.passwordHash = await bcrypt.hash(password, 10);
+    }
+
+    Object.assign(user, userData);
+
+    const saved = await this.userRepository.save(user);
+    return this.toSafeUser(saved);
+  }
+
+  async softDelete(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    await this.userRepository.softDelete(id);
+
+    return { message: 'User deleted' };
   }
 }

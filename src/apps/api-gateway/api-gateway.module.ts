@@ -7,6 +7,7 @@ import { LoggerMiddleware } from '../../libs/common/src/middlewares/logger.middl
 import { RequestIdMiddleware } from '../../libs/common/src/middlewares/request-id.middleware';
 import { AuthModule } from '../auth/auth.module';
 import { BreedModule } from '../breed/breed.module';
+import { CartModule } from '../cart/cart.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { BreedModule } from '../breed/breed.module';
     OrderModule,
     BreedModule,
     AuthModule,
+    CartModule,
   ],
 })
 export class ApiGatewayModule implements NestModule {
