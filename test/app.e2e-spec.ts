@@ -16,7 +16,7 @@ describe('App (e2e)', () => {
     await app.init();
   });
 
-  it('GET /order-service', () => {
-    return request(app.getHttpServer()).get('/order-service').expect(200);
+  it('GET /order', () => {
+    return request(app.getHttpServer()).get('/order').expect(200);
   });
 });
