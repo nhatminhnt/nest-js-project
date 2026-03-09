@@ -4,9 +4,15 @@ import { CatService } from './cat.service';
 import { CatController } from './cat.controller';
 import { Cat } from './entities/cat.entity';
 import { CatImage } from '../cat-image/entities/cat-image.entity';
+import { CatDatabaseModule } from './cat-database.module';
+
+const connectionName = 'cat';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Cat, CatImage])],
+  imports: [
+    CatDatabaseModule,
+    TypeOrmModule.forFeature([Cat, CatImage], connectionName),
+  ],
   controllers: [CatController],
   providers: [CatService],
 })

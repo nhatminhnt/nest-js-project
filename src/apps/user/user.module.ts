@@ -3,9 +3,15 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { UserDatabaseModule } from './user-database.module';
+
+const connectionName = 'user';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [
+    UserDatabaseModule,
+    TypeOrmModule.forFeature([User], connectionName),
+  ],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],

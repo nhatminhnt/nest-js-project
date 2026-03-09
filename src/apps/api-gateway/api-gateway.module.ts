@@ -1,5 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
 import { CatModule } from '../cat/cat.module';
 import { UserModule } from '../user/user.module';
 import { OrderModule } from '../order/order.module';
@@ -11,7 +10,6 @@ import { CartModule } from '../cart/cart.module';
 
 @Module({
   imports: [
-    DatabaseModule,
     CatModule,
     UserModule,
     OrderModule,
