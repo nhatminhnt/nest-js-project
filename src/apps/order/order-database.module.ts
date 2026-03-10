@@ -16,7 +16,9 @@ const connectionName = 'order';
         process.env.DB_ORDER_PORT ?? process.env.DB_MASTER_PORT ?? 5432,
       ),
       username: process.env.DB_ORDER_USERNAME ?? process.env.DB_MASTER_USERNAME,
-      password: process.env.DB_ORDER_PASSWORD ?? process.env.DB_MASTER_PASSWORD,
+      password: String(
+        process.env.DB_ORDER_PASSWORD ?? process.env.DB_MASTER_PASSWORD ?? '',
+      ),
       database: process.env.DB_ORDER_DATABASE ?? process.env.DB_MASTER_DATABASE,
       entities: [Order, OrderItem, Payment],
       autoLoadEntities: false,
