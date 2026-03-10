@@ -3,14 +3,10 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from '../../../libs/common/enums';
-import { Cart } from '../../cart/entities/cart.entity';
-import { Order } from '../../order/entities/order.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -47,10 +43,4 @@ export class User {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt?: Date;
-
-  @OneToOne(() => Cart, (cart: Cart) => cart.user)
-  cart: Cart;
-
-  @OneToMany(() => Order, (order: Order) => order.user)
-  orders: Order[];
 }

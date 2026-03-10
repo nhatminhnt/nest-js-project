@@ -2,12 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OrderStatus, PaymentStatus } from '../../../libs/common/enums';
-import { User } from '../../user/entities/user.entity';
 import { OrderItem } from './order-item.entity';
 import { Payment } from './payment.entity';
 
@@ -16,8 +14,8 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.orders, { nullable: false })
-  user: User;
+  @Column({ name: 'user_id', type: 'uuid' })
+  userId: string;
 
   @Column({ name: 'total_amount', type: 'numeric' })
   totalAmount: number;

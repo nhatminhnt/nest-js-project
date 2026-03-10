@@ -1,11 +1,10 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../../user/entities/user.entity';
 import { CartItem } from './cart-item.entity';
 
 @Entity({ name: 'carts' })
@@ -13,8 +12,8 @@ export class Cart {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User, (user) => user.cart)
-  user: User;
+  @Column({ name: 'user_id', type: 'uuid', unique: true })
+  userId: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
