@@ -19,6 +19,9 @@ export class User {
   @Column({ name: 'password_hash' })
   passwordHash: string;
 
+  @Column({ name: 'hashed_refresh_token', type: 'text', nullable: true })
+  hashedRefreshToken: string | null;
+
   @Column({ name: 'full_name' })
   fullName: string;
 
