@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +11,10 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
   ) {}
+
+  async register(registerDto: RegisterDto) {
+    return this.userService.create(registerDto);
+  }
 
   async validateUser(
     email: string,

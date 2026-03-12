@@ -14,11 +14,27 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @Post('register')
+  @ApiOperation({ summary: 'Register a new user' })
+  @ApiBody({ type: RegisterDto })
+  @ApiResponse({
+    status: 201,
+    description: 'User successfully registered.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request. Email might already exist.',
+  })
+  async register(@Body() registerDto: RegisterDto) {
+    return this.authService.register(registerDto);
+  }
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
