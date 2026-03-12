@@ -64,6 +64,50 @@ export class UserService {
     return this.toSafeUser(user);
   }
 
+  async findByEmailWithPassword(email: string) {
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
+  }
+
+  async updateRefreshToken(userId: string, refreshToken: string) {
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(userId, {
+      hashedRefreshToken,
+    });
+  }
+
+  async removeRefreshToken(userId: string) {
+    return this.userRepository.update(userId, {
+      hashedRefreshToken: null,
+    });
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: string) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+
+    if (!user || !user.hashedRefreshToken) {
+      throw new NotFoundException('User or refresh token not found');
+    }
+
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.hashedRefreshToken,
+    );
+
+    if (isRefreshTokenMatching) {
+      return this.toSafeUser(user);
+    }
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOne({
       where: { id },

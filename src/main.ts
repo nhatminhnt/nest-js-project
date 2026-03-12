@@ -1,10 +1,12 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import cookieParser from 'cookie-parser';
 import { ApiGatewayModule } from './apps/api-gateway/api-gateway.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);
+  app.use(cookieParser());
 
   const config = new DocumentBuilder()
     .setTitle('Gateway API')
