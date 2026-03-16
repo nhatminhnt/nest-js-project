@@ -8,10 +8,12 @@ import {
   Delete,
   ParseUUIDPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CatService } from './cat.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 
+@ApiTags('cat')
 @Controller('cat')
 export class CatController {
   constructor(private readonly catService: CatService) {}
