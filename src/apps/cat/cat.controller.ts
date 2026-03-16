@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CatService } from './cat.service';
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -26,17 +27,20 @@ export class CatController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.catService.findOne(+id);
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.catService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-    return this.catService.update(+id, updateCatDto);
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateCatDto: UpdateCatDto,
+  ) {
+    return this.catService.update(id, updateCatDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.catService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.catService.remove(id);
   }
 }
