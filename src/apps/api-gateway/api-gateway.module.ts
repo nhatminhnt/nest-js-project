@@ -8,7 +8,7 @@ import { AuthModule } from '../auth/auth.module';
 import { BreedModule } from '../breed/breed.module';
 import { CartModule } from '../cart/cart.module';
 import { CatImageModule } from '../cat-image/cat-image.module';
-
+import { PaymentsModule } from '../payments/payments.module';
 @Module({
   imports: [
     CatModule,
@@ -18,6 +18,7 @@ import { CatImageModule } from '../cat-image/cat-image.module';
     AuthModule,
     CartModule,
     CatImageModule,
+    PaymentsModule,
   ],
 })
 export class ApiGatewayModule implements NestModule {
